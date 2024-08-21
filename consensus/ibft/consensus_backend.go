@@ -111,6 +111,7 @@ func (i *backendIBFT) InsertBlock(
 		"hash", newBlock.Hash(),
 		"validation_type", i.currentSigner.Type(),
 		"validators", i.currentValidators.Len(),
+		"current_block_validator", i.currentSigner.Address(),
 		"committed", len(committedSeals),
 	)
 
