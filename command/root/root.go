@@ -28,7 +28,7 @@ type RootCommand struct {
 func NewRootCommand() *RootCommand {
 	rootCommand := &RootCommand{
 		baseCmd: &cobra.Command{
-			Short: "DTX-CHAIN is a framework for building Ethereum-compatible Blockchain networks",
+			Short: "The core node software which powers the DTX blockchain",
 		},
 	}
 
