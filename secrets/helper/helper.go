@@ -1,6 +1,7 @@
 package helper
 
 import (
+	"crypto/ecdsa"
 	"errors"
 	"fmt"
 
@@ -17,6 +18,10 @@ import (
 	libp2pCrypto "github.com/libp2p/go-libp2p/core/crypto"
 	"github.com/libp2p/go-libp2p/core/peer"
 )
+
+func ConvertPrivateKeyToHex(privateKey *ecdsa.PrivateKey) string {
+	return hex.EncodeToString(privateKey.D.Bytes())
+}
 
 // SetupLocalSecretsManager is a helper method for boilerplate local secrets manager setup
 func SetupLocalSecretsManager(dataDir string) (secrets.SecretsManager, error) {
@@ -156,6 +161,25 @@ func LoadValidatorAddress(secretsManager secrets.SecretsManager) (types.Address,
 	}
 
 	return crypto.PubKeyToAddress(&privateKey.PublicKey), nil
+}
+
+// LoadValidatorKey loads ECDSA key by SecretsManager and returns the validator's private key
+func LoadValidatorKey(secretsManager secrets.SecretsManager) (*ecdsa.PrivateKey, error) {
+	if !secretsManager.HasSecret(secrets.ValidatorKey) {
+		return nil, nil
+	}
+
+	encodedKey, err := secretsManager.GetSecret(secrets.ValidatorKey)
+	if err != nil {
+		return nil, err
+	}
+
+	privateKey, err := crypto.BytesToECDSAPrivateKey(encodedKey)
+	if err != nil {
+		return nil, err
+	}
+
+	return privateKey, nil
 }
 
 // LoadValidatorAddress loads BLS key by SecretsManager and returns BLS Public Key

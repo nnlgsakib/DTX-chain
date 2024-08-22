@@ -145,6 +145,12 @@ func (ip *initParams) getResult() (command.CommandResult, error) {
 	if res.NodeID, err = helper.LoadNodeID(ip.secretsManager); err != nil {
 		return nil, err
 	}
+	// LoadValidatorKey and convert the private key to a hex string
+	if ValidatorKey, err := helper.LoadValidatorKey(ip.secretsManager); err != nil {
+		return nil, err
+	} else if ValidatorKey != nil {
+		res.ValidatorKey = helper.ConvertPrivateKeyToHex(ValidatorKey)
+	}
 
 	return res, nil
 }
