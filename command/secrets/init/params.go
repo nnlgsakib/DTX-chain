@@ -138,9 +138,9 @@ func (ip *initParams) getResult() (command.CommandResult, error) {
 		return nil, err
 	}
 
-	if res.BLSPubkey, err = helper.LoadBLSPublicKey(ip.secretsManager); err != nil {
-		return nil, err
-	}
+	// if res.BLSPubkey, err = helper.LoadBLSPublicKey(ip.secretsManager); err != nil {
+	// 	return nil, err
+	// }
 
 	if res.NodeID, err = helper.LoadNodeID(ip.secretsManager); err != nil {
 		return nil, err

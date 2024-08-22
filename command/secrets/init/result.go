@@ -24,7 +24,6 @@ func (r Results) GetOutput() string {
 
 type SecretsInitResult struct {
 	Address      types.Address `json:"address"`
-	BLSPubkey    string        `json:"bls_pubkey"`
 	NodeID       string        `json:"node_id"`
 	ValidatorKey string        `json:"validator_key"` // Updated field to be exported
 }
